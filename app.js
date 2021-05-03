@@ -31,7 +31,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://admin-faby:Test123@cluster0.sxnl5.mongodb.net/userDB?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGOOSE_LOGIN, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -57,20 +57,20 @@ passport.deserializeUser(User.deserializeUser());
 //code until here needs to be in this order
 //////////////////////////////////////////////////////////////////////////////////////
 //needs to be underneath the session Google Oauth
-passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets",
-    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({
-      googleId: profile.id
-    }, function(err, user) {
-      return cb(err, user);
-    });
-  }
-));
+// passport.use(new GoogleStrategy({
+//     clientID: process.env.CLIENT_ID,
+//     clientSecret: process.env.CLIENT_SECRET,
+//     callbackURL: "http://localhost:3000/auth/google/secrets",
+//     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+//   },
+//   function(accessToken, refreshToken, profile, cb) {
+//     User.findOrCreate({
+//       googleId: profile.id
+//     }, function(err, user) {
+//       return cb(err, user);
+//     });
+//   }
+// ));
 
 ///////////////////////////////////////////////////////////////////////////////////
 
